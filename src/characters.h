@@ -5,9 +5,15 @@
 
 #include "entity.h"
 
+/**
+ * @headerfile characters.h
+ * @brief Représente différentes variations de l'entité de jeu de base dans lequel le patron de
+ * conception du Update Method peut-être modulé.
+ */
+
 class Character_Rat : public Entity
 {
-public:
+  public:
 	Character_Rat ();
 
 	void ExecuteUpdate (float DeltaTime) override;
@@ -15,7 +21,7 @@ public:
 
 class Character_Punk : public Entity
 {
-public:
+  public:
 	Character_Punk ();
 
 	void ExecuteUpdate (float DeltaTime) override;

@@ -143,30 +143,38 @@ class GameApp final /* La classe est final, aucune classe dérivée ne peut êtr
 	{
 		bool running = true;
 		uint64_t last_time = SDL_GetPerformanceCounter ();
-		while (running)
+		/* Patron de conception: Boucle de jeu. */
+		while (running == true)
 			{
+				/* Patron de conception: Boucle d'événements (on ne fait pas grand chose dans cet
+				 * example ici). */
 				SDL_Event event;
-				while (SDL_PollEvent (&event))
+				while (SDL_PollEvent (&event) == true)
 					{
 						if (event.type == SDL_EVENT_QUIT)
 							running = false;
 					}
 
-				uint64_t freq = SDL_GetPerformanceFrequency ();
-				uint64_t current_time = SDL_GetPerformanceCounter ();
-				float delta_time
+				/* Calcul de la durée de l'image (itération de la boucle de jeu) précédente. */
+				const uint64_t freq = SDL_GetPerformanceFrequency ();
+				const uint64_t current_time = SDL_GetPerformanceCounter ();
+				const float delta_time
 					= static_cast<float> (current_time - last_time) / static_cast<float> (freq);
 				last_time = current_time;
 				CalculateFPS (delta_time);
+
+				/* Patron de conception: Update Method */
 				for (const auto &ent : Entities)
 					{
 						ent->Update (delta_time);
 					}
+
+				/* Rendu simplifié. */
 				SDL_SetRenderDrawColor (Renderer, 12, 12, 44, 255);
 				SDL_RenderClear (Renderer);
 				for (const auto &ent : Entities)
 					{
-						ent->Color (Renderer);
+						ent->SetRenderColorToEntity (Renderer);
 						SDL_FRect dst = ent->Destination ();
 						SDL_RenderFillRect (Renderer, &dst);
 					}
@@ -175,7 +183,13 @@ class GameApp final /* La classe est final, aucune classe dérivée ne peut êtr
 	}
 };
 
-int
+/**
+ * @brief Point d'entrée du programme.
+ * @param argc
+ * @param argv
+ * @return
+ */
+Sint32
 main (int argc, char *argv[])
 {
 	GameApp app;
