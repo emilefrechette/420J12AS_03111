@@ -1,9 +1,14 @@
-cmake_minimum_required(VERSION 4.2)
+cmake_minimum_required(VERSION 3.10)
 project(420J12)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(420J12 src/main.cpp src/entity.cpp src/characters.cpp)
+add_executable(420J12
+			   src/main.cpp
+			   src/entity.cpp
+			   src/characters.cpp
+			   src/test.cpp
+			   )
 
 target_link_libraries(420J12 PRIVATE SDL3 SDL3_image SDL3_ttf)
 

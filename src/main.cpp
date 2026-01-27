@@ -5,6 +5,7 @@
 
 #include "characters.h"
 #include "entity.h"
+#include "test.h"
 
 #include <SDL3/SDL.h>
 #include <memory>
@@ -81,8 +82,6 @@ class GameApp final /* La classe est final, aucune classe dérivée ne peut êtr
 				SDL_LogCritical (1, "SDL failed to create renderer! %s", SDL_GetError ());
 				abort ();
 			}
-		SDL_SetDefaultTextureScaleMode (Renderer, SDL_SCALEMODE_NEAREST);
-
 		Entities = std::vector<std::unique_ptr<Entity>> ();
 		Entities.push_back (std::make_unique<Character_Rat> ());
 		Entities.push_back (std::make_unique<Character_Rat> ());
@@ -141,8 +140,14 @@ class GameApp final /* La classe est final, aucune classe dérivée ne peut êtr
 	void
 	Run ()
 	{
+		/* Quand le programme devra s'arrêter. */
 		bool running = true;
+
+		/* Arrete la mise a jour des entites. */
+		bool paused = false;
+
 		uint64_t last_time = SDL_GetPerformanceCounter ();
+
 		/* Patron de conception: Boucle de jeu. */
 		while (running == true)
 			{
@@ -152,7 +157,20 @@ class GameApp final /* La classe est final, aucune classe dérivée ne peut êtr
 				while (SDL_PollEvent (&event) == true)
 					{
 						if (event.type == SDL_EVENT_QUIT)
-							running = false;
+							{
+								running = false;
+							}
+						if (event.type == SDL_EVENT_KEY_DOWN)
+							{
+								if (event.key.repeat == true)
+									{
+										break;
+									}
+								if (event.key.scancode == SDL_SCANCODE_P)
+									{
+										paused = !paused;
+									}
+							}
 					}
 
 				/* Calcul de la durée de l'image (itération de la boucle de jeu) précédente. */
@@ -163,14 +181,17 @@ class GameApp final /* La classe est final, aucune classe dérivée ne peut êtr
 				last_time = current_time;
 				CalculateFPS (delta_time);
 
-				/* Patron de conception: Update Method */
-				for (const auto &ent : Entities)
+				if (paused == false)
 					{
-						ent->Update (delta_time);
+						/* Patron de conception: Update Method */
+						for (const auto &ent : Entities) // for ... in
+							{
+								ent->Update (delta_time);
+							}
 					}
 
 				/* Rendu simplifié. */
-				SDL_SetRenderDrawColor (Renderer, 12, 12, 44, 255);
+				SDL_SetRenderDrawColor (Renderer, 255, 255, 0, 255);
 				SDL_RenderClear (Renderer);
 				for (const auto &ent : Entities)
 					{
@@ -178,6 +199,7 @@ class GameApp final /* La classe est final, aucune classe dérivée ne peut êtr
 						SDL_FRect dst = ent->Destination ();
 						SDL_RenderFillRect (Renderer, &dst);
 					}
+
 				SDL_RenderPresent (Renderer);
 			}
 	}
@@ -192,6 +214,7 @@ class GameApp final /* La classe est final, aucune classe dérivée ne peut êtr
 Sint32
 main (int argc, char *argv[])
 {
+	// Exemple d'aujourd'hui
 	GameApp app;
 	app.Run ();
 	return 0;

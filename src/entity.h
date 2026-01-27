@@ -34,6 +34,7 @@ class Entity
 	 */
 	[[nodiscard]] SDL_FRect Destination () const;
 
+
 	/**
 	 * @brief Fonction principale représentant le patron de conception du Update Method.
 	 * @param DeltaTime
@@ -48,6 +49,7 @@ class Entity
 	 * @param DeltaTime
 	 */
 	virtual void ExecuteUpdate (float DeltaTime) = 0;
+
 
   protected:
 	/**
