@@ -8,7 +8,7 @@ Player::Player ()
 	AddComponent (MOVEMENT);
 	movement.velocity = (SDL_FPoint){ 0.f, 0.f };
 	AddComponent (MAGIC);
-	magic.type = new IceMagicType ();
+	magic.type = new PoisonMagicType ();
 	AddComponent (RENDER);
 	render.color = (SDL_Color){ 255, 125, 0, 255 };
 	AddComponent (TRANSFORM);

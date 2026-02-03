@@ -7,6 +7,7 @@
 
 /**
  * @headerfile characters.h
+ * @brief Variations d'entités avec certains composants propres.
  */
 
 class Character_Rat : public Entity

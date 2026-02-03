@@ -16,14 +16,10 @@ Character_Rat::Character_Rat ()
 
 Character_Punk::Character_Punk ()
 {
-	AddComponent (HEALTH);
-	AddComponent (MOVEMENT);
-	AddComponent (MAGIC);
+	AddComponent (HEALTH | MOVEMENT | MAGIC | RENDER | TRANSFORM);
 	magic.damage = 8;
 	magic.type = new IceMagicType ();
-	AddComponent (RENDER);
 	render.color = (SDL_Color){ 122, 44, 65, 255 };
-	AddComponent (TRANSFORM);
 	transform.position
 		= (SDL_FPoint){ static_cast<float> (SDL_rand (500)), static_cast<float> (SDL_rand (500)) };
 	transform.size = (SDL_FPoint){ 80.f, 38.f };

@@ -58,7 +58,6 @@ class GameApp final /* La classe est final, aucune classe dérivée ne peut êtr
 	std::vector<Entity *> Entities;
 
 	bool keyboard[SDL_SCANCODE_COUNT] = { false };
-
 	Entity *player;
 
   public:
@@ -86,7 +85,6 @@ class GameApp final /* La classe est final, aucune classe dérivée ne peut êtr
 				SDL_LogCritical (1, "SDL failed to create renderer! %s", SDL_GetError ());
 				abort ();
 			}
-		SDL_SetDefaultTextureScaleMode (Renderer, SDL_SCALEMODE_NEAREST);
 
 		player = new Player ();
 		Entities = std::vector<Entity *> ();
@@ -162,6 +160,7 @@ class GameApp final /* La classe est final, aucune classe dérivée ne peut êtr
 							{
 								running = false;
 							}
+
 						if (event.type == SDL_EVENT_KEY_DOWN)
 							{
 								keyboard[event.key.scancode] = true;
@@ -180,6 +179,7 @@ class GameApp final /* La classe est final, aucune classe dérivée ne peut êtr
 				last_time = current_time;
 				CalculateFPS (delta_time);
 
+				/* Mouvement du joueur */
 				player->movement.velocity = { 0.f, 0.f };
 				if (keyboard[SDL_SCANCODE_W] == true)
 					{
@@ -198,6 +198,7 @@ class GameApp final /* La classe est final, aucune classe dérivée ne peut êtr
 						player->movement.velocity.x = 50.f;
 					}
 
+				/* Tir de projectiles magiques. */
 				if (keyboard[SDL_SCANCODE_UP] == true)
 					{
 						dynamic_cast<Player *> (player)->Shoot (Entities, (SDL_Point){ 0, -1 });
@@ -218,10 +219,7 @@ class GameApp final /* La classe est final, aucune classe dérivée ne peut êtr
 				/* Patron de conception: Update Method */
 				for (const auto &ent : Entities)
 					{
-						if (ent->HasComponent (MOVEMENT | TRANSFORM))
-							{
-								ent->MovementUpdate (delta_time);
-							}
+						ent->MovementUpdate (delta_time);
 					}
 
 				/* Rendu simplifié. */
@@ -229,10 +227,7 @@ class GameApp final /* La classe est final, aucune classe dérivée ne peut êtr
 				SDL_RenderClear (Renderer);
 				for (const auto &ent : Entities)
 					{
-						if (ent->HasComponent (TRANSFORM | RENDER))
-							{
-								ent->Render (Renderer);
-							}
+						ent->RenderUpdate (Renderer);
 					}
 				SDL_RenderPresent (Renderer);
 			}
