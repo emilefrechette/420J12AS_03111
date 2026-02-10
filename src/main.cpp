@@ -7,16 +7,27 @@
 #define SDL_MAIN_USE_CALLBACKS
 #include <SDL3/SDL_main.h>
 
+class App
+{
+public:
+	SDL_Window *win;
+	SDL_Renderer *rend;
+
+	App() = default;
+};
+
 SDL_AppResult
 SDL_AppInit (void **appstate, int argc, char *argv[])
 {
 	SDL_Log ("hello, world");
 
-	SDL_WindowFlags win_flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY;
-	SDL_Window *win = SDL_CreateWindow ("Hello", 480, 480, win_flags);
-	SDL_Renderer *rend = SDL_CreateRenderer(win, nullptr);
+	App *app = new App();
 
-	*appstate = rend;
+	SDL_WindowFlags win_flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY;
+	app->win = SDL_CreateWindow ("Hello", 480, 480, win_flags);
+	app->rend = SDL_CreateRenderer(app->win, nullptr);
+
+	*appstate = app;
 
 	return SDL_APP_CONTINUE;
 }
@@ -46,10 +57,10 @@ SDL_AppEvent (void *appstate, SDL_Event *event)
 SDL_AppResult
 SDL_AppIterate (void *appstate)
 {
-	SDL_Renderer *rend = (SDL_Renderer *)appstate;
-	SDL_SetRenderDrawColor(rend, 200, 0, 125, 255);
-	SDL_RenderClear(rend);
-	SDL_RenderPresent(rend);
+	App *app = (App *)appstate;
+	SDL_SetRenderDrawColor(app->rend, 200, 0, 125, 255);
+	SDL_RenderClear(app->rend);
+	SDL_RenderPresent(app->rend);
 
 	return SDL_APP_CONTINUE;
 }
