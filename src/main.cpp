@@ -9,11 +9,11 @@
 
 class App
 {
-public:
+  public:
 	SDL_Window *win;
 	SDL_Renderer *rend;
 
-	App() = default;
+	App () = default;
 };
 
 SDL_AppResult
@@ -21,16 +21,18 @@ SDL_AppInit (void **appstate, int argc, char *argv[])
 {
 	SDL_Log ("hello, world");
 
-	App *app = new App();
+	App *app = new App ();
 
 	SDL_WindowFlags win_flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIGH_PIXEL_DENSITY;
 	app->win = SDL_CreateWindow ("Hello", 480, 480, win_flags);
-	app->rend = SDL_CreateRenderer(app->win, nullptr);
+	app->rend = SDL_CreateRenderer (app->win, nullptr);
 
 	*appstate = app;
 
 	return SDL_APP_CONTINUE;
 }
+
+bool is_debug = false;
 
 SDL_AppResult
 SDL_AppEvent (void *appstate, SDL_Event *event)
@@ -58,9 +60,19 @@ SDL_AppResult
 SDL_AppIterate (void *appstate)
 {
 	App *app = (App *)appstate;
-	SDL_SetRenderDrawColor(app->rend, 200, 0, 125, 255);
-	SDL_RenderClear(app->rend);
-	SDL_RenderPresent(app->rend);
+	SDL_SetRenderDrawColor (app->rend, 200, 0, 125, 255);
+	SDL_RenderClear (app->rend);
+
+	SDL_SetRenderDrawColor (app->rend, 255, 255, 255, 255);
+
+	if (is_debug == true)
+		{
+			static Uint8 i;
+			SDL_RenderDebugTextFormat (app->rend, 5.f, 5.f, "hello, world: %d", i);
+			i++;
+		}
+
+	SDL_RenderPresent (app->rend);
 
 	return SDL_APP_CONTINUE;
 }
