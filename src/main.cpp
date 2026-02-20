@@ -157,6 +157,13 @@ main (int argc, char *argv[])
 			SDL_SetRenderDrawColor (app->Renderer, 12, 12, 44, 255);
 			SDL_RenderClear (app->Renderer);
 
+			SDL_Point win_size = { 0 };
+			SDL_GetWindowSize (app->Window, &win_size.x, &win_size.y);
+
+			SDL_SetRenderDrawColor (app->Renderer, 42, 42, 104, 255);
+			SDL_RenderLine (app->Renderer, 0.f, 0.f, static_cast<float> (win_size.x), static_cast<float> (win_size.y));
+			SDL_RenderLine (app->Renderer, 0.f, static_cast<float> (win_size.y), static_cast<float> (win_size.x), 0.f);
+
 			static float displayed;
 			static float count;
 			if (count <= 0.f)
