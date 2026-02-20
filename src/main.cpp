@@ -34,7 +34,7 @@
  * 40x40. La position des jetons est aléatoire. Le pointage des jetons doit être représenté par
  * un patron de conception d'État, dont les trois états sont: Jeton normal (1 points), Super-jeton
  * (3 points), Omega Jeton (10 points).
- * - Sac à Dos: Créez le sac à dos au milieu de la moitié supérieure de l'écran. La taille du sac à
+ * - Sac à Dos: Créez le sac à dos au milieu de la moitié inférieure de l'écran. La taille du sac à
  * dos est de 120x150. 20%
  *
  * Question 4) Créez les composants nécessaires afin de supporter la mécanique de "glisser-déposer"
