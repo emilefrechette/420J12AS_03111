@@ -7,27 +7,47 @@
 #include <SDL3/SDL.h>
 
 /*
- * Question 1)	Modifier la classe Entity pour supporter les patrons de conception de Composant et
- * UpdateMethod.
- * 1b) En commentaire, au dessus de la classe, expliquer pourquoi vous avez choisi cette
- * manière de représenter les composants (il existe plusieurs manières d'exprimer le patron).
  *
- * Répondez aux questions suivantes en exprimant vos solutions avec divers types de Composants:
+ * Consignes de remises) Créez un nouveau répertoire git et soumettez-le sur votre GitHub personnel.
+ * Chaque question devrait être un COMMIT individuel, identifié par le numéro de la question. 10%
  *
- * Question 2) Créer plusieurs entités et dessinez-les entités. Un simple rectangle suffit.
+ * Tous les outils traditionnels sont permis pour l'examen: recherche, forum de discussion, exemples
+ * du cours, etc. L'IA est permis, mais just Copilot: https://copilot.microsoft.com/ et les IA
+ * intégrées dans les IDEs. Pour copilot, s.v.p. ajoutez en commentaire le ou les lien(s) de votre
+ * ou vos conversation(s) reliée(s) à l'examen (bouton en haut à droite). Vous pouvez être accusé de
+ * plagiat autrement. De plus, il est interdit de demander verbatim les questions de l'examen dans
+ * les conversations de copilot.
  *
- * Question 3) Détecter lorsque la souris chevauche sur une entité, changer son état.
- * IMPORTANT: Exprimé l'état sous forme de patron de conception.
- * Question 3b) Détecter lorsque la souris clique sur une entité et changer son état.
+ * Finalement, il n'est pas permis d'échanger des informations entre les étudiants (tolérance zéro)
+ * ou de converser avec d'autres individus durant l'examen.
  *
- * Question 4) Changer la couleur de l'entité selon son état Non-chevauché, Chevauché, Cliqué
- * lorsque vient le temps de la dessiner.
+ * - - - - -
  *
- * Question 5) Déplacer l'entité lorsque la souris est cliquée et se déplace simultanéement. Dans ce
- * cas, l'entité devrait se déplacer dans la même direction que la souris (style mécanique "drag and
- * drop").
+ * Question 1)	Modifiez les classes GameApp et Entity de sorte à supporter les patrons de
+ * conception de Composant et UpdateMethod. 20%
  *
- * Question 6) Réorganiser la classe GameApp afin de respecter le patron de conception du Singleton.
+ * Question 2) Créez les composants nécessaires afin de pouvoir dessiner les entités sous formes de
+ * rectangles de diverse grandeur, position et couleur. 20%
+ *
+ * Question 3) Créez deux types d'entités: les Jetons (Tokens) et le Sac à dos (Bag).
+ * - Jetons : Créez 10 à 20 jetons dans la moitié supérieure de l'écran. La taille des jetons est de
+ * 40x40. La position des jetons est aléatoire. Le pointage des jetons doit être représenté par
+ * un patron de conception d'État, dont les trois états sont: Jeton normal (1 points), Super-jeton
+ * (3 points), Omega Jeton (10 points).
+ * - Sac à Dos: Créez le sac à dos au milieu de la moitié supérieure de l'écran. La taille du sac à
+ * dos est de 120x150. 20%
+ *
+ * Question 4) Créez les composants nécessaires afin de supporter la mécanique de "glisser-déposer"
+ * sur les jetons. Avec la souris, on doit pouvoir cliquer sur un jeton et le déplacer. Représenter
+ * l'état du jeton durant l'action de "glisser-déposer" sous former de patron de conception d'État
+ * comportant les états: Non-Sélectionné, Sélectionné et Cliqué. 15%
+ *
+ * Question 5) Créez les composants nécessaires afin de supporter la mécanique de collecte des
+ * jetons sur le sac à dos. Lorsqu'un jeton est déposé sur le sac à dos, il faut l'enlever de
+ * l'affichage ou le détruire, et ajouter le pointage correspondant dans le sac à dos.
+ * (Affichez le nombre de points à l'écran avec SDL_RenderDebugTextFormat.) 15%
+ *
+ *
  */
 
 #include "entity.h"
