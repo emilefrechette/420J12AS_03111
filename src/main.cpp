@@ -11,19 +11,10 @@
 
 #include "game.h"
 
-/*
- * Question 5) Créez les composants nécessaires afin de supporter la mécanique de collecte des
- * jetons sur le sac à dos. Lorsqu'un jeton est déposé sur le sac à dos, il faut l'enlever de
- * l'affichage ou le détruire, et ajouter le pointage correspondant dans le sac à dos.
- * (Affichez le nombre de points à l'écran avec SDL_RenderDebugTextFormat.) 15%
- *
- *
- */
-
 Sint32
 main (int argc, char *argv[])
 {
-	GameApp *app = new GameApp ();
+	auto *app = new GameApp ();
 	bool running = true;
 	uint64_t last_time = SDL_GetPerformanceCounter ();
 
