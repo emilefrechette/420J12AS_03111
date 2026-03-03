@@ -1,0 +1,3 @@
+C:/Users/ltmf1/Desktop/VSCode/build/CMakeFiles/VSCode.dir
+C:/Users/ltmf1/Desktop/VSCode/build/CMakeFiles/edit_cache.dir
+C:/Users/ltmf1/Desktop/VSCode/build/CMakeFiles/rebuild_cache.dir
