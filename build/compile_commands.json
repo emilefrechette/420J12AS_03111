@@ -1,8 +1,0 @@
-[
-{
-  "directory": "C:/Users/ltmf1/Desktop/VSCode/build",
-  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe   -g -o CMakeFiles\\VSCode.dir\\simple_example.cpp.obj -c C:\\Users\\ltmf1\\Desktop\\VSCode\\simple_example.cpp",
-  "file": "C:/Users/ltmf1/Desktop/VSCode/simple_example.cpp",
-  "output": "CMakeFiles/VSCode.dir/simple_example.cpp.obj"
-}
-]
