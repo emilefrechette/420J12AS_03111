@@ -15,14 +15,17 @@ class App final
 {
   SDL_Window *window = nullptr;
   SDL_Renderer *renderer = nullptr;
+
   EntityFactory * entity_factory;
-  SpriteResourceFactory * sprite_resource_factory;
+
 
   std::vector<Entity*> entities = std::vector<Entity*> ();
 
   bool b_game_over = false;
 
 public:
+  SpriteResourceFactory * sprite_resource_factory;
+
   Uint64 now = 0u;
   Uint64 last = 0u;
   float fps = 0.f;

@@ -4,13 +4,13 @@
 #include <SDL3_image/SDL_image.h>
 
 #include "app.h"
+#include "entity.h"
 
 #include "components/box.h"
 #include "components/render.h"
 #include "components/sprite.h"
 #include "components/transform.h"
 
-#include "entity.h"
 
 /**
  * Exemple du patron "poids mouche" ainsi que du patron "usine" (secondaire)
@@ -40,7 +40,7 @@ main (Sint32 argc, char *argv[])
       entity->AddComponent (new BoxComponent ());
       entity->AddComponent (new RenderComponent (app->GetRenderer ()));
       /** @note Le "poids mouche" est implémenter pour le Sprite. */
-      entity->AddComponent (new SpriteComponent (app->GetRenderer (),
+      entity->AddComponent (new SpriteComponent (app,
                                                  std::string ("res/01.png")));
     }
 

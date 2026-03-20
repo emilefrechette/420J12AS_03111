@@ -58,10 +58,11 @@ public:
 
 class SpriteComponent : public Component
 {
-  SpriteResource *sprite;
+  // La ressource "poids mouche" (flyweight)
+  SpriteResource *resource; //=u64
 
 public:
-  SpriteComponent (SDL_Renderer *renderer, const std::string &image);
+  SpriteComponent (App *app, const std::string &path);
   ~SpriteComponent () override = default;
 
   void UpdateComponent (App *app, Entity *owner) override;
