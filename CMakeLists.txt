@@ -7,7 +7,9 @@ add_executable(${PROJECT_NAME}
 			   src/db.cpp
                src/entity.cpp
                src/components/box.cpp
+               src/components/click.cpp
                src/components/color.cpp
+               src/components/hover.cpp
 			   src/components/render.cpp
 			   src/components/text.cpp
 			   src/components/transform.cpp

@@ -113,7 +113,7 @@ DatabaseClient::GetHighScores (std::vector<ScoreRecord> &scores, Sint32 limit)
                       "LIMIT ?;";
 
   sqlite3_stmt *prepared_statement;
-  int result = sqlite3_prepare_v2 (database, query.c_str (), -1, &prepared_statement, nullptr);
+  Sint32 result = sqlite3_prepare_v2 (database, query.c_str (), -1, &prepared_statement, nullptr);
 
   if (result != SQLITE_OK)
     {
@@ -166,6 +166,26 @@ DatabaseClient::GetHighScores (std::vector<ScoreRecord> &scores, Sint32 limit)
     }
 
   sqlite3_finalize (prepared_statement);
+  return SQLITE_OK;
+}
+
+Sint32
+DatabaseClient::DeleteAllScores ()
+{
+  const char* sql = "DELETE FROM highscores;";
+  char* error_message = nullptr;
+
+  Sint32 result = sqlite3_exec (database, sql, nullptr, nullptr, &error_message);
+
+  if (result != SQLITE_OK)
+    {
+      SDL_LogError (SDL_LOG_CATEGORY_ERROR, "Failed to delete all scores: %s!",
+                    error_message);
+      sqlite3_free (error_message);
+      return result;
+    }
+
+  SDL_LogInfo (SDL_LOG_CATEGORY_APPLICATION, "All scores deleted successfully!");
   return SQLITE_OK;
 }
 

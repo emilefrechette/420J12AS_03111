@@ -20,6 +20,7 @@ public:
 
   [[nodiscard]] TTF_Text *GetGlyph () const;
   void UpdateComponent (App *app, Entity *owner) override;
+  void UpdateGlyph (App *app, const std::string &_content);
 };
 
 #endif /* TEXT_MODULE_H */

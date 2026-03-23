@@ -10,13 +10,14 @@
 class ColorComponent : public Component
 {
   SDL_Color value {};
+  SDL_Color present {};
 
 public:
   ColorComponent () = default;
   ColorComponent (SDL_Color _color);
   ~ColorComponent () override = default;
 
-  [[nodiscard]] SDL_Color GetValue() const;
+  [[nodiscard]] SDL_Color GetPresentValue() const;
   void UpdateComponent (App *app, Entity *owner) override;
 };
 

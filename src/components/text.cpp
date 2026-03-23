@@ -5,7 +5,8 @@
 
 TextComponent::TextComponent (App *app, const std::string &_content)
 {
-  glyph = TTF_CreateText(app->GetTextEngine (), app->GetFont(), _content.c_str(), _content.length ());
+  glyph = TTF_CreateText (app->GetTextEngine (), app->GetFont (),
+                          _content.c_str (), _content.length ());
 }
 
 TTF_Text *
@@ -17,4 +18,16 @@ TextComponent::GetGlyph () const
 void
 TextComponent::UpdateComponent (App *app, Entity *owner)
 {
+}
+
+void
+TextComponent::UpdateGlyph (App *app, const std::string &_content)
+{
+  if (glyph != nullptr)
+    {
+      TTF_DestroyText (glyph);
+      glyph = nullptr;
+    }
+  glyph = TTF_CreateText (app->GetTextEngine (), app->GetFont (),
+                          _content.c_str (), _content.length ());
 }

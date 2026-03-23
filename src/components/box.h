@@ -7,10 +7,14 @@
 
 class BoxComponent : public Component
 {
+  bool b_is_filled = false;
+
 public:
   BoxComponent () = default;
+  BoxComponent (bool _filled);
   ~BoxComponent () override = default;
 
+  [[nodiscard]] bool IsFilled() const;
   void UpdateComponent (App *app, Entity *owner) override;
 };
 

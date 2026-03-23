@@ -25,6 +25,7 @@ public:
   Sint32 OpenDatabase ();
   Sint32 InsertScore (const ScoreRecord &score);
   Sint32 GetHighScores (std::vector<ScoreRecord> &scores, Sint32 limit);
+  Sint32 DeleteAllScores ();
 
 private:
   Sint32 CreateTable ();
