@@ -16,10 +16,10 @@ struct ScoreRecord
 
 class DatabaseClient final
 {
-  sqlite3 *database;
+  sqlite3 *database = nullptr;
 
 public:
-  DatabaseClient ();
+  DatabaseClient () = default;
   ~DatabaseClient ();
 
   Sint32 OpenDatabase ();

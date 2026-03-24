@@ -3,13 +3,12 @@
 
 #include <string>
 
-DatabaseClient::DatabaseClient () : database (nullptr) {}
-
 DatabaseClient::~DatabaseClient () { CloseDatabase (); }
 
 Sint32
 DatabaseClient::OpenDatabase ()
 {
+  SDL_CreateDirectory("data");
   Sint32 result = sqlite3_open ("data/scores.db", &database);
   if (result != SQLITE_OK)
     {
@@ -113,12 +112,12 @@ DatabaseClient::GetHighScores (std::vector<ScoreRecord> &scores, Sint32 limit)
                       "LIMIT ?;";
 
   sqlite3_stmt *prepared_statement;
-  Sint32 result = sqlite3_prepare_v2 (database, query.c_str (), -1, &prepared_statement, nullptr);
+  Sint32 result = sqlite3_prepare_v2 (database, query.c_str (), -1,
+                                      &prepared_statement, nullptr);
 
   if (result != SQLITE_OK)
     {
-      SDL_LogError (SDL_LOG_CATEGORY_ERROR,
-                    "Failed to prepare statement: %s",
+      SDL_LogError (SDL_LOG_CATEGORY_ERROR, "Failed to prepare statement: %s",
                     sqlite3_errmsg (database));
       return result;
     }
@@ -134,28 +133,32 @@ DatabaseClient::GetHighScores (std::vector<ScoreRecord> &scores, Sint32 limit)
 
   scores.clear ();
 
-  SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, "Fetching top %d scores", limit);
+  SDL_LogInfo (SDL_LOG_CATEGORY_APPLICATION, "Fetching top %d scores", limit);
   Sint32 rowCount = 0;
   while ((result = sqlite3_step (prepared_statement)) == SQLITE_ROW)
     {
       rowCount++;
-      SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, "Processing row %d", rowCount);
+      SDL_LogInfo (SDL_LOG_CATEGORY_APPLICATION, "Processing row %d",
+                   rowCount);
 
       ScoreRecord score;
       const unsigned char *name = sqlite3_column_text (prepared_statement, 0);
       if (name)
         {
           score.player_name = reinterpret_cast<const char *> (name);
-          SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, "Player: %s", score.player_name.c_str());
+          SDL_LogInfo (SDL_LOG_CATEGORY_APPLICATION, "Player: %s",
+                       score.player_name.c_str ());
         }
       score.value = sqlite3_column_int (prepared_statement, 1);
-      SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, "Score: %d", score.value);
+      SDL_LogInfo (SDL_LOG_CATEGORY_APPLICATION, "Score: %d", score.value);
 
       scores.push_back (score);
     }
 
-  SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, "Total rows retrieved: %d", rowCount);
-  SDL_LogInfo(SDL_LOG_CATEGORY_APPLICATION, "Vector size after loop: %zu", scores.size());
+  SDL_LogInfo (SDL_LOG_CATEGORY_APPLICATION, "Total rows retrieved: %d",
+               rowCount);
+  SDL_LogInfo (SDL_LOG_CATEGORY_APPLICATION, "Vector size after loop: %zu",
+               scores.size ());
 
   if (result != SQLITE_DONE)
     {
@@ -172,10 +175,11 @@ DatabaseClient::GetHighScores (std::vector<ScoreRecord> &scores, Sint32 limit)
 Sint32
 DatabaseClient::DeleteAllScores ()
 {
-  const char* sql = "DELETE FROM highscores;";
-  char* error_message = nullptr;
+  std::string query = "DELETE FROM highscores;";
+  char *error_message = nullptr;
 
-  Sint32 result = sqlite3_exec (database, sql, nullptr, nullptr, &error_message);
+  Sint32 result
+      = sqlite3_exec (database, query.c_str (), nullptr, nullptr, &error_message);
 
   if (result != SQLITE_OK)
     {
@@ -185,7 +189,8 @@ DatabaseClient::DeleteAllScores ()
       return result;
     }
 
-  SDL_LogInfo (SDL_LOG_CATEGORY_APPLICATION, "All scores deleted successfully!");
+  SDL_LogInfo (SDL_LOG_CATEGORY_APPLICATION,
+               "All scores deleted successfully!");
   return SQLITE_OK;
 }
 
@@ -202,8 +207,7 @@ DatabaseClient::CloseDatabase ()
         }
       else
         {
-          SDL_LogError (SDL_LOG_CATEGORY_ERROR,
-                        "Failed to close database: %s",
+          SDL_LogError (SDL_LOG_CATEGORY_ERROR, "Failed to close database: %s",
                         sqlite3_errmsg (database));
         }
       return result;

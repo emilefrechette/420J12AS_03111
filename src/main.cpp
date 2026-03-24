@@ -2,20 +2,10 @@
 
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
-#include <sqlite3.h>
 #include <string>
 
 #include "app.h"
 #include "db.h"
-#include "entity.h"
-
-#include "components/box.h"
-#include "components/click.h"
-#include "components/color.h"
-#include "components/hover.h"
-#include "components/render.h"
-#include "components/text.h"
-#include "components/transform.h"
 
 // https://www.dafont.com/lazenby-computer.font?l[]=10
 
@@ -38,6 +28,11 @@ main (Sint32 argc, char *argv[])
   app->CreateScene();
 
   DatabaseClient *db = app->GetDatabaseClient ();
+  if (db == nullptr)
+    {
+      SDL_LogError(1, "There was an issue with the database!");
+      return 1;
+    }
   db->OpenDatabase ();
 
   while (app->IsGameOver () == false)

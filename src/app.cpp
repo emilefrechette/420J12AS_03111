@@ -186,7 +186,7 @@ App::DeleteScores ()
 
   auto *text1 = score_text->GetComponent<TextComponent> ();
   char content1[255]{};
-  SDL_snprintf (content1, 255, "Score:");
+  SDL_snprintf (content1, 255, "Score: 0");
   text1->UpdateGlyph (this, content1);
 
   auto *text2 = highscore_text->GetComponent<TextComponent> ();
